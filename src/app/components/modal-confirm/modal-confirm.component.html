@@ -1,0 +1,8 @@
+<nz-modal
+  [nzVisible]="isVisible"
+  nzTitle="Bạn có chắc muốn xoá người dùng này?"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+>
+  <p *nzModalContent>Với email là: {{ email }}</p>
+</nz-modal>

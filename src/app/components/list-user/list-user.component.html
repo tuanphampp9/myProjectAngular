@@ -1,0 +1,56 @@
+<nz-table
+  #basicTable
+  [nzData]="listUser"
+  [nzFrontPagination]="false"
+  [nzTotal]="total"
+  [nzPageSize]="4"
+  (nzQueryParams)="getPage($event)"
+>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Email</th>
+      <th>Họ</th>
+      <th>Tên</th>
+      <th>Hành động</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{ data.id }}</td>
+      <td>{{ data.email }}</td>
+      <td>{{ data.first_name }}</td>
+      <td>{{ data.last_name }}</td>
+      <td>
+        <span
+          nz-icon
+          nzType="edit"
+          nzTheme="outline"
+          (click)="handleSelectedUser(data, 'edit')"
+          [style]="{
+            color: '#ffcc00',
+            cursor: 'pointer',
+            fontSize: '20px',
+            marginRight: '5px'
+          }"
+        ></span>
+        <span
+          (click)="handleSelectedUser(data, 'delete')"
+          nz-icon
+          nzType="delete"
+          nzTheme="outline"
+          [style]="{ color: 'red', cursor: 'pointer', fontSize: '20px' }"
+        ></span>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
+<app-modal-confirm
+  [(isVisible)]="visibleModalConfirm"
+  (pushConfirm)="getConfirm($event)"
+  [email]="userSelected.email"
+></app-modal-confirm>
+
+<app-modal-edit [(isVisible)]="visibleModalEdit" [userData]="userSelected">
+</app-modal-edit>
