@@ -5,6 +5,7 @@
   [nzTotal]="total"
   [nzPageSize]="4"
   (nzQueryParams)="getPage($event)"
+  style="min-width: 510px"
 >
   <thead>
     <tr>
@@ -52,5 +53,9 @@
   [email]="userSelected.email"
 ></app-modal-confirm>
 
-<app-modal-edit [(isVisible)]="visibleModalEdit" [userData]="userSelected">
+<app-modal-edit
+  [(isVisible)]="visibleModalEdit"
+  [userData]="userSelected"
+  (pushData)="getDataChild($event)"
+>
 </app-modal-edit>

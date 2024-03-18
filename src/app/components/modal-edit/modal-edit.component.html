@@ -3,6 +3,7 @@
   nzTitle="Thông tin người dùng"
   (nzOnCancel)="handleCancel()"
   (nzOnOk)="handleOk()"
+  [nzOkDisabled]="userForms.invalid"
 >
   <ng-container *nzModalContent>
     <form nz-form [formGroup]="userForms" class="login-form">
@@ -46,7 +47,7 @@
         <nz-form-control>
           <nz-input-group nzPrefixIcon="aliwangwang">
             <input
-              type="file"
+              type="text"
               nz-input
               formControlName="avatar"
               placeholder="Avatar"

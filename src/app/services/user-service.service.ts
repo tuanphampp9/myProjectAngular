@@ -11,8 +11,8 @@ export class UserService {
   API_URL = environment.API_URL;
   getAllUserService(perPage: number, pageId: number) {
     const params = new HttpParams()
-      .append('per_page', perPage)
-      .append('page', pageId);
+      .append('_per_page', perPage)
+      .append('_page', pageId);
     return this.http.get(`${this.API_URL}`, { params: params });
   }
   deleteUserService(idUser: number) {

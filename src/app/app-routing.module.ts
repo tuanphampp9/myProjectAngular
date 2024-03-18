@@ -6,6 +6,7 @@ import { FormDataComponent } from './components/form-data/form-data.component';
 const routes: Routes = [
   { path: 'list-user', component: ListUserComponent },
   { path: 'add-user', component: FormDataComponent },
+  // { path: '**', component: </h2> },
 ];
 
 @NgModule({

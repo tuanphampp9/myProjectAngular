@@ -12,6 +12,7 @@ export class ListUserComponent {
   public total: number = 1;
   public visibleModalConfirm: boolean = false;
   public visibleModalEdit: boolean = false;
+  public pageIndex: number = 1;
   public userSelected: InterfaceUser = {
     id: 1,
     email: '',
@@ -22,20 +23,20 @@ export class ListUserComponent {
   constructor(private UserService: UserService) {
     this.UserService.getAllUserService(4, 1).subscribe((data: any) => {
       this.listUser = data.data;
-      this.total = data.total;
+      this.total = data.items;
     });
   }
 
   public getPage(params: NzTableQueryParams) {
     const { pageIndex, pageSize } = params;
+    this.pageIndex = pageIndex;
     this.UserService.getAllUserService(4, pageIndex).subscribe(
       (data: any) => (this.listUser = data.data)
     );
   }
   public deleteUser(idUser: number): void {
-    this.UserService.deleteUserService(idUser).subscribe((data) =>
-      console.log(data)
-    );
+    this.UserService.deleteUserService(idUser).subscribe();
+    this.listUser = this.listUser.filter((user) => user.id !== idUser);
   }
   public getConfirm(response: any): void {
     if (response) {
@@ -49,5 +50,18 @@ export class ListUserComponent {
       this.visibleModalConfirm = true;
     }
     this.userSelected = data;
+  }
+  public getDataChild(infoUser: InterfaceUser) {
+    this.UserService.updateUserService(infoUser, infoUser.id).subscribe(
+      (data) =>
+        (this.listUser = this.listUser.map((user) => {
+          if (user.id === infoUser.id) {
+            return {
+              ...infoUser,
+            };
+          }
+          return user;
+        }))
+    );
   }
 }

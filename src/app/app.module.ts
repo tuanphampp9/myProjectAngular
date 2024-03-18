@@ -27,6 +27,7 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { ModalEditComponent } from './components/modal-edit/modal-edit.component';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 registerLocaleData(en);
 
 @NgModule({
@@ -52,6 +53,7 @@ registerLocaleData(en);
     NzPaginationModule,
     NzUploadModule,
     NzModalModule,
+    NzButtonModule
   ],
   providers: [
     provideClientHydration(),

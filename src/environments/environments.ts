@@ -1,3 +1,3 @@
 export const environment = {
-  API_URL: 'https://reqres.in/api/users',
+  API_URL: 'http://localhost:3000/users',
 };

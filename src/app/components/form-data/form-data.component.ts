@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { UserService } from '../../services/user-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-data',
@@ -25,15 +26,19 @@ export class FormDataComponent {
     ]),
     avatar: new FormControl(''),
   });
-  constructor(private fb: FormBuilder, private UserService: UserService) {}
+  constructor(
+    private fb: FormBuilder,
+    private UserService: UserService,
+    private route: Router
+  ) {}
   submitForm() {
     this.UserService.createUserService(this.userForms.value).subscribe((data) =>
       console.log(data)
     );
+    this.route.navigate(['/list-user']);
   }
   getErrorMsg(controlName: string): string {
     const control = this.userForms.get(controlName);
-    console.log(control);
     if (control?.hasError('required')) {
       return 'Không được để trống';
     }

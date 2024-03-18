@@ -4,8 +4,10 @@ import {
   DoCheck,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { InterfaceUser } from '../../interface-user';
@@ -16,7 +18,7 @@ import { UserService } from '../../services/user-service.service';
   templateUrl: './modal-edit.component.html',
   styleUrl: './modal-edit.component.css',
 })
-export class ModalEditComponent {
+export class ModalEditComponent implements OnChanges {
   @Input() isVisible: boolean = false;
   @Output() isVisibleChange: EventEmitter<boolean> = new EventEmitter();
   @Input() userData: InterfaceUser = {
@@ -26,8 +28,9 @@ export class ModalEditComponent {
     last_name: '',
     avatar: '',
   };
+  @Output() pushData: EventEmitter<InterfaceUser> = new EventEmitter();
   public userForms: FormGroup = new FormGroup({
-    id: new FormControl(),
+    id: new FormControl(1),
     email: new FormControl('', [Validators.email]),
     first_name: new FormControl('', [
       Validators.required,
@@ -41,6 +44,11 @@ export class ModalEditComponent {
   });
   @Output() userDataChange: EventEmitter<InterfaceUser> = new EventEmitter();
   constructor(private UserService: UserService) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    this.userForms.setValue({
+      ...this.userData,
+    });
+  }
 
   getErrorMsg(controlName: string): string {
     const control = this.userForms.get(controlName);
@@ -55,14 +63,12 @@ export class ModalEditComponent {
     return '';
   }
   handleCancel() {
-    console.log(this.userForms);
     this.isVisible = false;
+    this.isVisibleChange.emit(false);
   }
   handleOk() {
     this.isVisible = false;
-    this.UserService.updateUserService(
-      this.userForms.value,
-      this.userData.id
-    ).subscribe((data) => data);
+    this.isVisibleChange.emit(false);
+    this.pushData.emit(this.userForms.value);
   }
 }
